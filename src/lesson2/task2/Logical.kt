@@ -3,6 +3,8 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Пример
@@ -18,7 +20,15 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean = TODO()
+fun isNumberHappy(number: Int): Boolean {
+    val firstTwoDigits = number / 100
+    val lastTwoDigits = number % 100
+    val sumFirst = firstTwoDigits / 10 + firstTwoDigits % 10
+    val sumSecond = lastTwoDigits / 10 + lastTwoDigits % 10
+
+    return sumFirst == sumSecond
+
+}
 
 /**
  * Простая
@@ -59,4 +69,19 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+
+    val holeShortSide = min(r, s)
+    val holeLongSide = max(r, s)
+    val kirpichShortSide = min(a, min(b, c))
+    val kirpichMediumSide = when {
+        a in b..c || a in c..b -> a
+        b in a..c || b in c..a -> b
+        else -> c
+    }
+
+    return when {
+        kirpichShortSide <= holeShortSide && kirpichMediumSide <= holeLongSide -> true
+        else -> false
+    }
+}

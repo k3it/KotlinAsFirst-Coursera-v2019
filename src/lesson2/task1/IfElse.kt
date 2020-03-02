@@ -4,6 +4,7 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
@@ -63,7 +64,23 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String {
+
+    if (age % 100 / 10 <= 1) return when (age % 20) {
+        1 -> "$age год"
+        2 -> "$age года"
+        3 -> "$age года"
+        4 -> "$age года"
+        else -> "$age лет"
+    }
+    else return when (age % 10) {
+        1 -> "$age год"
+        2 -> "$age года"
+        3 -> "$age года"
+        4 -> "$age года"
+        else -> "$age лет"
+    }
+}
 
 /**
  * Простая
@@ -76,7 +93,21 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double = TODO()
+): Double {
+
+    val wayOne = t1 * v1
+    val wayTwo = t2 * v2
+    val wayThree = t3 * v3
+    val halfWay = (wayOne + wayTwo + wayThree) / 2.0
+
+    return when {
+        halfWay <= wayOne -> halfWay / v1
+        halfWay <= wayOne + wayTwo -> t1 + (halfWay - wayOne) / v2
+        else -> t1 + t2 + (halfWay - wayOne - wayTwo) / v3
+    }
+
+
+}
 
 /**
  * Простая
