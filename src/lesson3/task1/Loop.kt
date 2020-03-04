@@ -2,6 +2,8 @@
 
 package lesson3.task1
 
+import kotlin.math.absoluteValue
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -67,7 +69,12 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    return when {
+        n.absoluteValue < 10 -> 1
+        else -> digitNumber(n / 10) + 1
+    }
+}
 
 /**
  * Простая
@@ -75,7 +82,18 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var prev = 0
+    var curr = 1
+    var next = 1
+    for (i in 2..n) {
+        next = prev + curr
+        prev = curr
+        curr = next
+    }
+    return next
+}
+
 
 /**
  * Простая
@@ -133,7 +151,13 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    return when {
+        x == 1 -> 0
+        x % 2 == 0 -> collatzSteps(x / 2) + 1
+        else -> collatzSteps(3 * x + 1) + 1
+    }
+}
 
 /**
  * Средняя
@@ -164,7 +188,17 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+
+    var reversedNum = 0
+    val numDigits = digitNumber(n)
+
+    for (i in 1..numDigits) {
+        reversedNum += n % 10.0.pow(i).toInt() / 10.0.pow(i - 1).toInt() * 10.0.pow(numDigits - i).toInt()
+    }
+
+    return reversedNum
+}
 
 /**
  * Средняя
@@ -207,4 +241,13 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var fibSeqLen = 1
+    var i = 1
+    var nextFib = 1
+    while (fibSeqLen < n) {
+        nextFib = fib(++i)
+        fibSeqLen += digitNumber(nextFib)
+    }
+    return nextFib / 10.0.pow(fibSeqLen - n).toInt() % 10
+}
