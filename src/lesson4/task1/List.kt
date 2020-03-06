@@ -115,7 +115,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double = sqrt(v.map { it * it }.sum())
 
 /**
  * Простая
@@ -245,4 +245,90 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+
+    val singles = listOf(
+        "десять",
+        "один",
+        "два",
+        "три",
+        "четыре",
+        "пять",
+        "шесть",
+        "семь",
+        "восемь",
+        "девять"
+    )
+
+    val teens = listOf(
+        "двадцать",
+        "одиннадцать",
+        "двенадцать",
+        "тринадцать",
+        "четырнадцать",
+        "пятнадцать",
+        "шестнадцать",
+        "семнадцать",
+        "восемнадцать",
+        "девятнадцать"
+    )
+
+    val tens = listOf(
+        "сто",
+        "десять",
+        "двадцать",
+        "тридцать",
+        "сорок",
+        "пятьдесят",
+        "шестьдесят",
+        "семьдесят",
+        "восемьдесят",
+        "девяносто"
+    )
+
+    val hundreds = listOf(
+        "foo hundred",
+        "сто",
+        "двести",
+        "триста",
+        "четыреста",
+        "пятьсот",
+        "шестьсот",
+        "семьсот",
+        "восемьсот",
+        "девятьсот",
+        "тысяча"
+    )
+
+    val thousands = listOf(
+        "foo тысяч",
+        "одна тысяча",
+        "две тысячи",
+        "три тысячи",
+        "четыре тысячи",
+        "пять тысяч",
+        "шесть тысяч",
+        "семь тысяч",
+        "восемь тысяч",
+        "девять тысяч"
+    )
+
+
+    fun processNum(n: Int): List<String> {
+        return when {
+            n == 0 -> listOf()
+            n <= 10 -> listOf(singles[n % 10])
+            n < 20 -> listOf(teens[n % 10])
+            n < 100 -> listOf(tens[n / 10]) + processNum(n % 10)
+            n <= 1000 -> listOf(hundreds[n / 100]) + processNum(n % 100)
+            n < 10000 -> listOf(thousands[n / 1000]) + processNum(n % 1000)
+//            n <= 20000 -> listOf(teens[n/1000 % 10]) + listOf("тысяч")+ processNum(n % 1000)
+            n / 1000 % 100 in 11..20 || n / 1000 % 10 == 0 -> processNum(n / 1000) + listOf("тысяч") +
+                    processNum(n % 1000)
+            else -> processNum(n / 10000 * 10 ) + processNum(n % 10000)
+        }
+
+
+    }
+    return processNum(n).joinToString(separator = " ")
+}
