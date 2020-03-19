@@ -322,7 +322,6 @@ fun russian(n: Int): String {
             n < 100 -> listOf(tens[n / 10]) + processNum(n % 10)
             n <= 1000 -> listOf(hundreds[n / 100]) + processNum(n % 100)
             n < 10000 -> listOf(thousands[n / 1000]) + processNum(n % 1000)
-//            n <= 20000 -> listOf(teens[n/1000 % 10]) + listOf("тысяч")+ processNum(n % 1000)
             n / 1000 % 100 in 11..20 || n / 1000 % 10 == 0 -> processNum(n / 1000) + listOf("тысяч") +
                     processNum(n % 1000)
             else -> processNum(n / 10000 * 10 ) + processNum(n % 10000)

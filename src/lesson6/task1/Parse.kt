@@ -2,6 +2,10 @@
 
 package lesson6.task1
 
+import java.lang.IllegalArgumentException
+import java.lang.NumberFormatException
+import kotlin.math.exp
+
 /**
  * Пример
  *
@@ -70,6 +74,34 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String = TODO()
+//
+//    val months = listOf<String>(
+//        "foo",
+//        "января",
+//        "февраля",
+//        "марта",
+//        "апреля",
+//        "мая",
+//        "июня",
+//        "июля",
+//        "августа",
+//        "сентября",
+//        "октября",
+//        "ноября",
+//        "декабря"
+//    )
+//
+//    val (day, month, year) = str.split("\\s".toRegex(), limit = 3)
+//
+//    println("$day - $month -$year")
+//
+//    return if (day.toInt() < 31 && months.indexOf(month) > 0 && year.toInt() > 0) {
+//        String.format("%02d.%02d.%04d", day.toInt(), months.indexOf(month), year.toInt())
+//    } else {
+//        ""
+//    }
+//
+//}
 
 /**
  * Средняя
@@ -133,7 +165,32 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    var result = 0
+    var number: Int
+    var operation = "+"
+
+    val exprRegex = "\\d+( [+-] \\d+)*".toRegex()
+
+    if (!exprRegex.matches(expression)) throw  IllegalArgumentException()
+
+    for ((idx, element) in expression.split(" ").withIndex()) {
+
+        when (idx % 2) {
+            0 -> {
+                number = element.toInt()
+                when (operation) {
+                    "+" -> result += number
+                    "-" -> result -= number
+                    else -> throw  IllegalArgumentException()
+                }
+            }
+            1 -> operation = element
+        }
+    }
+    return result
+}
+
 
 /**
  * Сложная

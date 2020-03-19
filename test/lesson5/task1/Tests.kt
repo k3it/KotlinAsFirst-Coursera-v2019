@@ -198,16 +198,20 @@ class Tests {
             averageStockPrice(listOf())
         )
         assertEquals(
-            mapOf("MSFT" to 100.0, "NFLX" to 40.0),
-            averageStockPrice(listOf("MSFT" to 100.0, "NFLX" to 40.0))
-        )
-        assertEquals(
             mapOf("MSFT" to 150.0, "NFLX" to 40.0),
             averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
         )
         assertEquals(
+            mapOf("MSFT" to 100.0, "NFLX" to 40.0),
+            averageStockPrice(listOf("MSFT" to 100.0, "NFLX" to 40.0))
+        )
+        assertEquals(
             mapOf("MSFT" to 150.0, "NFLX" to 45.0),
             averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0, "NFLX" to 50.0))
+        )
+        assertEquals(
+            mapOf("MSFT" to 75.0, "NFLX" to 45.0),
+            averageStockPrice(listOf("MSFT" to 0.0, "MSFT" to 0.0,  "MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0, "NFLX" to 50.0))
         )
     }
 
@@ -235,6 +239,7 @@ class Tests {
         assertFalse(canBuildFrom(emptyList(), "foo"))
         assertTrue(canBuildFrom(listOf('a', 'b', 'o'), "baobab"))
         assertFalse(canBuildFrom(listOf('a', 'm', 'r'), "Marat"))
+        assertTrue(canBuildFrom(listOf('f', 'l'), "fl"))
     }
 
     @Test
@@ -330,5 +335,5 @@ class Tests {
         )
     }
 
-    // TODO: map task tests
+    //  TODO: map task tests
 }
